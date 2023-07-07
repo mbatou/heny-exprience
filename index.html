@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Heny Experience</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <style>
+        /* CSS for the banner container */
+        .banner {
+            background-image: url("img/banner.png");
+            background-size: cover;
+            background-position: center;
+            width: 160px;
+            height: 600px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .card-container {
+            position: fixed;
+            top: 0;
+            left: -100%;
+
+            /* Start off-screen to the left */
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+
+            /* Semi-transparent background color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+
+            /* Initially hidden */
+            pointer-events: none;
+
+            /* Disable interaction */
+            transition: left 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            padding: 40px;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .headline {
+            text-align: center;
+            font-size: 40px;
+            margin-bottom: 10px;
+            color: #fabc3d;
+        }
+
+        .description {
+            text-align: center;
+            font-size: 22px;
+            color: aliceblue;
+        }
+
+        .website-link {
+            text-align: center;
+            font-size: 16px;
+            color: aliceblue;
+        }
+
+        .card {
+            border-radius: 10px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            position: absolute;
+            top: 0px;
+            left: 0;
+            width: auto;
+            height: 30px;
+            /* background-size: cover;
+            background-position: center; */
+        }
+
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .video-background video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-img-container {
+            position: relative;
+        }
+
+        .price-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #fabc3d;
+            color: black;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .card-text {
+            margin-top: 10px;
+        }
+
+        .btn {
+            background-color: #fabc3d;
+            color: black;
+            border: #fabc3d;
+        }
+
+        .btn:hover {
+            background-color: black;
+            color: white;
+            border: black;
+        }
+
+        .flip-card {
+            perspective: 1000px;
+        }
+
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .card-front,
+        .card-back {
+            width: fit-content;
+            height: fit-content;
+            backface-visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: white;
+            /* Set background color to white */
+            border-radius: 10px;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            width: 435px;
+            height: 508px;
+            border-radius: 10px;
+
+        }
+
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .scene {
+            width: 10em;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cube {
+            color: #ccc;
+            cursor: pointer;
+            font-family: 'Roboto', sans-serif;
+            transition: all 0.85s cubic-bezier(.17, .67, .14, .93);
+            transform-style: preserve-3d;
+            transform-origin: 100% 50%;
+            width: 10em;
+            height: 2em;
+        }
+
+        .cube:hover {
+            transform: rotateX(-90deg);
+        }
+
+        .side {
+            box-sizing: border-box;
+            position: absolute;
+            display: inline-block;
+            height: 4em;
+            width: 10em;
+            text-align: center;
+            text-transform: uppercase;
+            padding-top: 1.5em;
+            font-weight: bold;
+        }
+
+        .top {
+            background: #fabc3d;
+            color: black;
+            transform: rotateX(90deg) translate3d(0, 0, 2em);
+            box-shadow: inset 0 0 0 5px #fff;
+        }
+
+        .front {
+            background: black;
+            color: #fabc3d;
+            box-shadow: inset 0 0 0 5px #fff;
+            transform: translate3d(0, 0, 2em);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="banner" onclick="showCard()"></div>
+
+    <div class="card-container" id="cardContainer">
+        <span class="close-button" onclick="closeCard()">&times;</span>
+        <div class="logo">
+            <img src="img/logo_heny.png" alt="logo_heny">
+        </div>
+        <div class="video-background">
+            <video autoplay loop muted>
+                <source src="img/Safari Valley Eco Park.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="card-content">
+            <h1 class="headline">Let's Get You Live Experiences</h1>
+            <p class="description">Discover amazing things to do anytime, anywhere</p>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-img-container">
+                            <img class="card-img-top" src="img/kayaking_kenya.jpeg" alt="Card Image">
+                            <span class="price-tag"><strong>GH₵</strong>629</span>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">The Olympus: Adrenaline Junkie</h5>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="card-text">
+                                        <span class="date-icon">&#x1F4C5;</span> July 18, 2023
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="card-text">
+                                        <span class="location-icon">&#x1F4CD;</span> Akosombo
+                                    </p>
+                                </div>
+                            </div>
+                            <p class="card-text">The Olympus adventure begins with a mountain hike inside the Akwamu
+                                Hills Community Forest. This ascent will take you to two peaks.
+                            </p>
+                            <button class="btn btn-primary">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-img-container">
+                            <img class="card-img-top" src="img/Mount-Longonot.jpeg" alt="Card Image">
+                            <span class="price-tag"><strong>GH₵</strong>1,551</span>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title" id="">Mount Longonot</h5>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="card-text">
+                                        <span class="date-icon">&#x1F4C5;</span> July 2, 2023
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p class="card-text">
+                                        <span class="location-icon">&#x1F4CD;</span> Nairobi
+                                    </p>
+                                </div>
+                            </div>
+                            <p class="card-text">On a private hiking and wildlife excursion from Nairobi into the
+                                spectacular Great Rift Valley.
+                            </p>
+                            <button class="btn btn-primary">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card flip-card">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <div class="card-img-container">
+                                    <img class="card-img-top" src="img/waterfalls.jpeg" alt="Card Image">
+                                    <span class="price-tag"><strong>GH₵</strong>80</span>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title" id="card-title">Chenku Waterfalls</h5>
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="card-text">
+                                                <span class="date-icon">&#x1F4C5;</span> July 8, 2023
+                                            </p>
+                                        </div>
+                                        <div class="col">
+                                            <p class="card-text">
+                                                <span class="location-icon">&#x1F4CD;</span> Dodowa
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <p class="card-text">Join us for an unforgettable adventure to Chenku Waterfall! Our
+                                        trip promises to be full of fun, food, drinks, and games.</p>
+                                    <button class="btn btn-primary" onclick="flipCard(this)">Book Now</button>
+                                </div>
+                            </div>
+                            <div class="card-back">
+                                <div class="card-body">
+                                    <h5 class="card-title">Confirm Your Booking</h5>
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="name">Name:</label>
+                                            <input type="text" class="form-control" id="name"
+                                                placeholder="Enter your name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="experience">Experience:</label>
+                                            <select class="form-control" id="experience">
+                                                <option selected disabled>Select an experience</option>
+                                                <option value="Chenku Waterfalls">Chenku Waterfalls</option>
+                                                <option value="Mount Longonot">Mount Longonot</option>
+                                                <option value="The Olympus: Adrenaline Junkie">The Olympus: Adrenaline
+                                                    Junkie</option>
+                                                <!-- Add more options for other experiences here -->
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Email:</label>
+                                            <input type="email" class="form-control" id="email"
+                                                placeholder="Enter your email">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="phone">Phone Number:</label>
+                                            <input type="tel" class="form-control" id="phone"
+                                                placeholder="Enter your phone number">
+                                        </div>
+                                        <button type="button" class="btn btn-primary"
+                                            onclick="confirmBooking(this)">Confirm</button>
+                                        <button type="button" class="btn btn-secondary"
+                                            onclick="flipCard(this)">Cancel</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            
+            <div class="scene">
+                <a href="https://heny.app/" target="_blank">
+                <div class="cube">
+                    <span class="side top">Heny App</span>
+                    <span class="side front">More infos</span>
+                </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function showCard() {
+            var cardContainer = document.getElementById("cardContainer");
+            cardContainer.style.left =
+                "0"; /* Move the container to the left edge */
+            cardContainer.style.opacity = "1";
+            cardContainer.style.pointerEvents = "auto";
+        }
+
+        function closeCard() {
+            var cardContainer = document.getElementById("cardContainer");
+            cardContainer.style.left =
+                "-100%"; /* Move the container off-screen to the left */
+            cardContainer.style.opacity = "0";
+            cardContainer.style.pointerEvents = "none";
+        }
+
+        function flipCard(button) {
+            var card = button.closest('.card');
+            card.classList.toggle('flipped');
+
+            // Get the title of the clicked experience
+            var experienceTitle = document.getElementById("card-title");
+            var title = experienceTitle.textContent.trim();
+
+            // Set the value of the dropdown to the clicked experience title
+            var experienceDropdown = document.getElementById("experience");
+            for (var i = 0; i < experienceDropdown.options.length; i++) {
+                if (experienceDropdown.options[i].value === title) {
+                    experienceDropdown.selectedIndex = i;
+                    break;
+                }
+            }
+
+            // Trigger the change event on the dropdown
+            var event = new Event("change");
+            experienceDropdown.dispatchEvent(event);
+        }
+
+        function confirmBooking(button) {
+            var form = button.closest('form');
+            // Retrieve form values and perform booking confirmation logic here
+        }
+
+
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
